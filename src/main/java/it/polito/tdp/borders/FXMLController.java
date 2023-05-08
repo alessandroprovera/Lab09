@@ -2,8 +2,10 @@
 package it.polito.tdp.borders;
 
 import java.net.URL;
+import java.util.Map;
 import java.util.ResourceBundle;
 
+import it.polito.tdp.borders.model.Country;
 import it.polito.tdp.borders.model.Model;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -28,7 +30,13 @@ public class FXMLController {
 
     @FXML
     void doCalcolaConfini(ActionEvent event) {
-
+    	this.txtResult.clear();
+    	this.model.createGraph(Integer.parseInt(this.txtAnno.getText()));
+    	Map<Country, Integer> gradiMap = this.model.calcolaGradoVertici();
+    	for(Country c: gradiMap.keySet()) {
+    		this.txtResult.appendText(c.getStateNme()+": "+gradiMap.get(c)+"\n");
+    	}
+    	this.txtResult.appendText("Componenti connesse: "+this.model.calcolaConnesse());
     }
 
     @FXML // This method is called by the FXMLLoader when initialization is complete
